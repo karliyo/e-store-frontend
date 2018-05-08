@@ -1,0 +1,16 @@
+.item {
+    padding: 1%;
+    font-family: "Roboto Mono";
+}
+
+.item-title {
+    font-weight: 600;
+    font-size: 1em;
+    padding-right: 10px;
+    word-wrap: break-word;
+}
+
+.item-price {
+    font-weight: 400px;
+    margin-top: 0;
+}

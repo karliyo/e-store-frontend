@@ -3,6 +3,8 @@ import axios from 'axios';
 import items from '../mock/mock_items_less.json';
 import Item from "./Item";
 
+require('./stylesheets/Posts.css');
+
 export default class Posts extends Component {
 
     constructor(props) {
@@ -27,9 +29,8 @@ export default class Posts extends Component {
 
     render() {
         const items = this.state.items.map((item) => <Item {...item}/>);
-        //console.log(items);
         return (
-            <div>
+            <div className="posts">
                 {items}
             </div>
         )
