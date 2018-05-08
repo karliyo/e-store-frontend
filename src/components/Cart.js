@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+require('./stylesheets/Cart.css');
+
 export default class Cart extends Component {
 
     constructor(props) {
@@ -8,8 +10,14 @@ export default class Cart extends Component {
 
     render() {
         return (
-            <div>
-                cart
+            <div className="cart">
+                <p id="cart-title">
+                    Your shopping cart
+                </p>
+
+                <div className="cart-content">
+                    content
+                </div>
             </div>
         );
     };

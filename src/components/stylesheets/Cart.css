@@ -1,0 +1,28 @@
+.cart {
+    width: 80%;
+    height: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    padding-left: 10%;
+    padding-right: 10%;
+
+    font-family: "Roboto Mono";
+
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    background-color: bisque;
+    flex-direction: column;
+}
+
+#cart-title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+.cart-content {
+
+}

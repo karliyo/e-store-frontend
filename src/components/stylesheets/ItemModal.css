@@ -1,0 +1,21 @@
+#add-to-cart {
+    background-color: #00C853;
+}
+
+.add-to-cart-in-stock {
+    color: #FFF;
+}
+
+.add-to-cart-oos {
+    color: #FFF;
+}
+
+@media only screen and (max-width: 600px) {
+    #item-modal {
+        overflow-y: scroll !important;
+    }
+}
+
+.subtitle {
+    font-weight: 600;
+}

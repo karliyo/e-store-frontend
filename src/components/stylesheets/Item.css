@@ -14,3 +14,13 @@
     font-weight: 400px;
     margin-top: 0;
 }
+
+.item img {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+#add-to-cart {
+    word-wrap: break-word;
+    margin-bottom: 1em;
+}

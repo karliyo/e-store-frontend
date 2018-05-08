@@ -9,12 +9,13 @@ import History from './helpers/History'
 export default class App extends Component {
   render() {
     return (
-        <Router history={History}>
+        <div className="main-wrapper">
+            <Header/>
             <Switch>
                 <Route exact path="/" component={Posts} />
                 <Route exact path="/cart" component={Cart} />
             </Switch>
-        </Router>
+        </div>
     );
   }
 }
