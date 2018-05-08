@@ -8,6 +8,7 @@ export default class Item extends Component {
     constructor(props) {
         super(props);
         this.onClick = this.onClick.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.state = {
             modalOpen: false
         }
@@ -18,7 +19,13 @@ export default class Item extends Component {
         this.setState({
             modalOpen: true
         });
-        console.log("Opening item page");
+    }
+
+    closeModal(e) {
+        e.preventDefault();
+        this.setState({
+            modalOpen: false
+        });
     }
 
     render() {
@@ -30,7 +37,8 @@ export default class Item extends Component {
                     {/*<button><span>View</span></button>*/}
                 {/*</div>*/}
                 {this.state.modalOpen ?
-                    <ItemModal {...this.props} modalOpen={this.state.modalOpen}/> : null}
+                    <ItemModal {...this.props} modalOpen={this.state.modalOpen} onCloseModal={this.closeModal}/>
+                    : null}
                 <img className="item-image" onClick={this.onClick} src={this.props.image} alt=''/>
             </div>
         )

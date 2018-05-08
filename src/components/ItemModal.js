@@ -13,7 +13,15 @@ let oosButton = {
 
 let instockButton = {
     color: '#FFF',
-    paddingBottom: '10px'
+    paddingBottom: '0'
+};
+
+let dialogStyle = {
+    width: '90%'
+};
+
+let closeButtonStyle = {
+    marginLeft: '2rem'
 };
 
 export default class ItemModal extends Component {
@@ -26,23 +34,36 @@ export default class ItemModal extends Component {
                     open={this.props.modalOpen}
                     autoDetectWindowHeight={true}
                     autoScrollBodyContent={true}
+                    contentStyle={dialogStyle}
                 >
-                    <p className="item-title">{this.props.name}</p>
-                    <p className="item-price">{this.props.price + " " + this.props.currency}</p>
-                    <img className="item-image" src={this.props.image} alt=''/>
+                    <div className="modal-content-wrapper">
+                        <div className="modal-left-column">
+                            <p className="item-title">{this.props.name}</p>
+                            <p className="item-price">{this.props.price + " " + this.props.currency}</p>
+                            <img className="item-image" src={this.props.image} alt=''/>
+                        </div>
+                        <div className="modal-right-column">
+                            <p className="subtitle">Description</p>
+                            <p className="item-description">{this.props.description}</p>
 
-                    <p className="subtitle">Description</p>
-                    <p className="item-description">{this.props.description}</p>
+                            <p className="subtitle">Location</p>
+                            <p className="item-store-location">{this.props.store}</p>
+                            <RaisedButton
+                                label="Add to cart"
+                                backgroundColor={this.props.instock ? '#00FF00' : '#FF0000'}
+                                style={this.props.instock ? instockButton : oosButton}
+                                labelStyle={instockButton}
+                                disabled={!this.props.instock}
+                            />
 
-                    <p className="subtitle">Location</p>
-                    <p className="item-store-location">{this.props.store}</p>
-                    <RaisedButton
-                        label="Add to cart"
-                        backgroundColor={this.props.instock ? '#00FF00' : '#FF0000'}
-                        style={this.props.instock ? instockButton : oosButton}
-                        labelStyle={instockButton}
-                        disabled={!this.props.instock}
-                    />
+                            <RaisedButton
+                                label="Close"
+                                primary={true}
+                                style={closeButtonStyle}
+                                onClick={this.props.onCloseModal}
+                            />
+                        </div>
+                    </div>
                 </Dialog>
             </MuiThemeProvider>
         );
