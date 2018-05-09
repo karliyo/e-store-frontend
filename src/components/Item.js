@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import ItemModal from "./ItemModal";
 
-import { connect } from 'react-redux';
-import { addItemToCart } from '../actions/UserActions';
-
 require('./stylesheets/Item.css');
 
 export default class Item extends Component {

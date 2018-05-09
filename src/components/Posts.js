@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import items from '../mock/mock_items_less.json';
+import items from '../mock/mock_items.json';
 import Item from "./Item";
 
 import { connect } from 'react-redux';
 import { addItemToCart } from '../actions/UserActions';
+import axios from "axios";
 
 require('./stylesheets/Posts.css');
 
@@ -14,13 +14,15 @@ class Posts extends Component {
         super(props);
         this.state = {
             items: items,
-            shownItems: 16 // number of items shown initially
+            shownItems: 32 // number of items shown initially
         };
         this.showMoreItems = this.showMoreItems.bind(this);
+        this.getStoreItems = this.getStoreItems.bind(this);
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll)
+        window.addEventListener('scroll', this.handleScroll);
+        this.getStoreItems();
     }
 
     showMoreItems() {
@@ -29,6 +31,18 @@ class Posts extends Component {
                 this.state.shownItems : this.state.shownItems + 5 // shows 5 more items when this is called
         })
     }
+
+    // Sends a GET request for items data to API.
+    getStoreItems() {
+        let API_KEY = process.env.REACT_APP_HEROKU_API_KEY;
+        axios.get('http://erply-challenge.herokuapp.com/list?AUTH=' + API_KEY)
+            .then((res) => {
+                this.setState({items: res.data})
+            }).catch((err) => {
+                console.log(err);
+        });
+    }
+
 
     handleScroll = () => {
         if (this.bottom !== null) {
@@ -59,7 +73,7 @@ class Posts extends Component {
     }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
     return {
         items: state.items
     };

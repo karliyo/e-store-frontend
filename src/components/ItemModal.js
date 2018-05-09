@@ -26,10 +26,6 @@ let closeButtonStyle = {
 
 
 export default class ItemModal extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
