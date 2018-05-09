@@ -4,7 +4,7 @@ import { removeItemFromCart } from '../actions/UserActions';
 
 import CartItem from "./CartItem";
 
-import {MuiThemeProvider, RaisedButton} from "material-ui";
+import { MuiThemeProvider, RaisedButton } from "material-ui";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 
@@ -17,10 +17,19 @@ let checkoutButton = {
     width: '80%'
 };
 
+let totalPrice;
+
 class Cart extends Component {
 
-    constructor(props) {
-        super(props);
+    componentDidUpdate() {
+        this.calculateTotalPrice(this.props.cart);
+    }
+
+    calculateTotalPrice(cart) {
+        totalPrice = 0;
+        for (let i = 0; i < cart.length; i++) {
+            totalPrice += cart[i].price * cart[i].quantity; // assuming they are all in same currency.
+        }
     }
 
     render() {
@@ -30,6 +39,7 @@ class Cart extends Component {
                 onClick={() => this.props.removeFromCart(item)}
                 {...item} />
         });
+        this.calculateTotalPrice(this.props.cart);
 
         return (
             <div className="cart">
@@ -39,7 +49,7 @@ class Cart extends Component {
                     <div className="cart-items">{ cartContent }</div>
                     <div className="cart-total">
                         <p id="cart-total-title">Total</p>
-                        <p id="cart-subtitle">Subtotal <p id="cart-total-price">5 EUR</p></p>
+                        <p id="cart-subtitle">Subtotal <p id="cart-total-price">{totalPrice} EUR</p></p>
 
                         <div id="button-wrapper">
                             <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
