@@ -7,8 +7,15 @@ import registerServiceWorker from './registerServiceWorker';
 import Store from './store';
 import App from './App';
 import './index.css';
+import { saveState } from "./localstorage";
 
 const storeInstance = Store();
+
+storeInstance.subscribe(() => {
+    saveState(
+        storeInstance.getState()
+    );
+});
 
 ReactDOM.render((
         <Provider store={storeInstance}>
