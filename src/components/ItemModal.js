@@ -26,6 +26,15 @@ let closeButtonStyle = {
 
 export default class ItemModal extends Component {
 
+    constructor(props) {
+        super(props);
+        this.addToCart = this.addToCart.bind(this);
+    }
+
+    addToCart() {
+        
+    }
+
     render() {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
@@ -54,6 +63,7 @@ export default class ItemModal extends Component {
                                 style={this.props.instock ? instockButton : oosButton}
                                 labelStyle={instockButton}
                                 disabled={!this.props.instock}
+                                onClick={this.addToCart}
                             />
 
                             <RaisedButton
