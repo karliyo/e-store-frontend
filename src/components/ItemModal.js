@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Dialog, MuiThemeProvider, RaisedButton} from "material-ui";
+import { Dialog, MuiThemeProvider, RaisedButton } from "material-ui";
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -24,15 +24,10 @@ let closeButtonStyle = {
     marginLeft: '2rem'
 };
 
-export default class ItemModal extends Component {
 
+export default class ItemModal extends Component {
     constructor(props) {
         super(props);
-        this.addToCart = this.addToCart.bind(this);
-    }
-
-    addToCart() {
-        
     }
 
     render() {
@@ -54,18 +49,17 @@ export default class ItemModal extends Component {
                         <div className="modal-right-column">
                             <p className="subtitle">Description</p>
                             <p className="item-description">{this.props.description}</p>
-
                             <p className="subtitle">Location</p>
                             <p className="item-store-location">{this.props.store}</p>
+
                             <RaisedButton
                                 label="Add to cart"
-                                backgroundColor={this.props.instock ? '#00FF00' : '#FF0000'}
+                                backgroundColor={this.props.instock ? '#03DAC6' : '#FF0000'}
                                 style={this.props.instock ? instockButton : oosButton}
                                 labelStyle={instockButton}
                                 disabled={!this.props.instock}
-                                onClick={this.addToCart}
+                                onClick={this.props.onButtonClick}
                             />
-
                             <RaisedButton
                                 label="Close"
                                 primary={true}

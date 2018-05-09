@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ItemModal from "./ItemModal";
 
+import { connect } from 'react-redux';
+import { addItemToCart } from '../actions/UserActions';
+
 require('./stylesheets/Item.css');
 
 export default class Item extends Component {
@@ -37,7 +40,7 @@ export default class Item extends Component {
                     {/*<button><span>View</span></button>*/}
                 {/*</div>*/}
                 {this.state.modalOpen ?
-                    <ItemModal {...this.props} modalOpen={this.state.modalOpen} onCloseModal={this.closeModal}/>
+                    <ItemModal {...this.props} modalOpen={this.state.modalOpen} onCloseModal={this.closeModal} onButtonClick={this.props.addToCartClick}/>
                     : null}
                 <img className="item-image" onClick={this.onClick} src={this.props.image} alt=''/>
             </div>

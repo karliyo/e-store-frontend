@@ -10,7 +10,7 @@ export default class Header extends Component {
                 <nav>
                     <ul>
                         <li><Link to="/">Home</Link></li>
-                        <li><Link to="/cart">Shopping Cart</Link></li>
+                        <li><Link to="/cart">Shopping cart</Link></li>
                     </ul>
                 </nav>
             </div>

@@ -3,15 +3,18 @@ import axios from 'axios';
 import items from '../mock/mock_items_less.json';
 import Item from "./Item";
 
+import { connect } from 'react-redux';
+import { addItemToCart } from '../actions/UserActions';
+
 require('./stylesheets/Posts.css');
 
-export default class Posts extends Component {
+class Posts extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             items: items,
-            shownItems: 12
+            shownItems: 16 // number of items shown initially
         };
         this.showMoreItems = this.showMoreItems.bind(this);
     }
@@ -23,33 +26,30 @@ export default class Posts extends Component {
     showMoreItems() {
         this.setState({
             shownItems: this.state.shownItems >= this.state.items.length ?
-                this.state.shownItems : this.state.shownItems + 5
+                this.state.shownItems : this.state.shownItems + 5 // shows 5 more items when this is called
         })
     }
 
-    handleScroll = (e) => {
+    handleScroll = () => {
         if (this.bottom !== null) {
             let n = this.bottom.getBoundingClientRect().top;
             let m = window.innerHeight;
-            if (n <= m) {
+            if (n <= m) { // when scrolled to bottom, it tries to show more items
                 this.showMoreItems();
             }
         }
     };
 
-    getStoreItems() {
-        let API_KEY = 'fae7b9f6-6363-45a1-a9c9-3def2dae206d';
-        let config = {'AUTH': { API_KEY }};
-        axios.get('http://erply-challenge.herokuapp.com/list', config).
-        then((res) => {
-            console.log(res);
-        });
-    }
-
     render() {
         const items = this.state.items
             .slice(0, this.state.shownItems) // shows only a certain amount of items at once
-            .map((item) => <Item {...item}/>);
+            .map((item, idx) =>
+                <Item
+                    {...item}
+                    key={idx}
+                    addToCartClick={() => this.props.addToCart(item)}
+                />
+            );
         return (
             <div className="posts">
                 {items}
@@ -57,5 +57,18 @@ export default class Posts extends Component {
             </div>
         )
     }
-
 }
+
+function mapStateToProps(state, props) {
+    return {
+        items: state.items
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addToCart: item => dispatch(addItemToCart(item))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
