@@ -5,9 +5,9 @@
 
     margin: 1.5em;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,0.2), 0 2px 5px 0 rgba(0,0,0,0.19);
-
-    max-height: 5%;
+    max-height: 40%;
     max-width: 100%;
+    min-height: 35%;
 
     background-color: inherit;
 }
@@ -60,7 +60,7 @@
 
 #cart-controls {
     width: 85px;
-    height: 35%;
+    height: 30px;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,0.2), 0 2px 5px 0 rgba(0,0,0,0.19);
     text-align: center;
     margin-left: 1.5em;

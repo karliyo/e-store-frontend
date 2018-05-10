@@ -41,14 +41,14 @@ class Cart extends Component {
                 onClickIncrease={() => this.props.increaseQuantity(item)}
                 {...item} />
         });
+        const emptyCart = () => { return (<div id="empty-cart">No items yet..</div>) };
         this.calculateTotalPrice(this.props.cart);
-
         return (
             <div className="cart">
                 <p id="cart-title">Your shopping cart</p>
 
                 <div className="cart-content">
-                    <div className="cart-items">{ cartContent }</div>
+                    <div className="cart-items">{ cartContent.length > 0 ? cartContent : emptyCart()}</div>
                     <div className="cart-total">
                         <p id="cart-total-title">Total</p>
                         <p id="cart-subtitle">Subtotal <p id="cart-total-price">{totalPrice} EUR</p></p>

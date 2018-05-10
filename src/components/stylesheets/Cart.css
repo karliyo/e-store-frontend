@@ -44,6 +44,7 @@
     background-color: white;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,0.2), 0 2px 5px 0 rgba(0,0,0,0.19);
     order: 1;
+    min-height: 250px;
 }
 
 .cart-total {
@@ -103,4 +104,11 @@
         min-width: 100% !important;
         padding: 0 !important;
     }
+}
+
+#empty-cart {
+    font-size: 3em;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 2em 0 2em 0;
 }
