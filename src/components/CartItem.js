@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { FlatButton, MuiThemeProvider, RaisedButton} from "material-ui";
+import { MuiThemeProvider } from "material-ui";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
-import {ActionAndroid, ActionDelete, ContentAdd, ContentRemove} from "material-ui/svg-icons/index";
-import {fullBlack, fullWhite} from "material-ui/styles/colors";
+import { ActionDelete, ContentAdd, ContentRemove } from "material-ui/svg-icons/index";
+import { fullBlack } from "material-ui/styles/colors";
 
 require('./stylesheets/CartItem.css');
 
