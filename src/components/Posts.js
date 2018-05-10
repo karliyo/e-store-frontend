@@ -28,22 +28,24 @@ class Posts extends Component {
             items: items,
             shownItems: 32, // number of items shown initially
             countries: [],
+            departments: [],
             availabilityOptions: [
                 'In stock',
                 'Out of stock'
             ],
             storeValue: 0,
-            inStockFilter: 0
+            inStockFilter: 0,
+            departmentFilter: 0
         };
         this.showMoreItems = this.showMoreItems.bind(this);
         this.getStoreItems = this.getStoreItems.bind(this);
-        this.mapStoreCountries = this.mapStoreCountries.bind(this);
+        this.mapStoreCountriesAndItemDepartments = this.mapStoreCountriesAndItemDepartments.bind(this);
     }
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
         this.getStoreItems();
-        this.mapStoreCountries();
+        this.mapStoreCountriesAndItemDepartments();
     }
 
     showMoreItems() {
@@ -53,14 +55,18 @@ class Posts extends Component {
         })
     }
 
-    mapStoreCountries() {
-        let result = [];
+    mapStoreCountriesAndItemDepartments() {
+        let countries = [];
+        let departments = [];
         this.state.items.map((item) => {
-            if (result.indexOf(item.store) === -1) {
-                result.push(item.store);
+            if (countries.indexOf(item.store) === -1) {
+                countries.push(item.store);
+            }
+            if (departments.indexOf(item.department) === -1) {
+                departments.push(item.department);
             }
         });
-        this.setState({countries: result});
+        this.setState({countries: countries, departments: departments});
     }
 
     // Sends a GET request for items data to API.
@@ -90,7 +96,8 @@ class Posts extends Component {
         let inStock = this.state.inStockFilter === 0;
         this.state.items.map((item) => {
             if (item.store === this.state.countries[this.state.storeValue] && // compares item attributes to filter opts
-                item.instock === inStock) {
+                item.instock === inStock &&
+                item.department === this.state.departments[this.state.departmentFilter]) {
                 result.push(item);
             }
         });
@@ -100,6 +107,8 @@ class Posts extends Component {
     handleStoreOptionChange = (event, index, value) => this.setState({storeValue: value});
 
     handleAvailabilityOptionChange = (event, index, value) => this.setState({inStockFilter: value});
+
+    handleCategoryOptionChange = (event, index, value) => this.setState({departmentFilter: value});
 
     render() {
         const filteredItems = this.filterItems();
@@ -140,6 +149,19 @@ class Posts extends Component {
                                 onChange={this.handleAvailabilityOptionChange}
                             >
                                 {this.state.availabilityOptions.map((item, idx) =>
+                                    <MenuItem value={idx} key={idx} label={item} primaryText={item} />
+                                )}
+                            </DropDownMenu>
+                        </div>
+                        <div id="filter-wrapper">
+                            <p id="filters-subtitle">{window.innerWidth > 768 ? "Department" : "Dpt"}</p>
+                            <DropDownMenu
+                                value={this.state.departmentFilter}
+                                menuItemStyle={menuItemStyle}
+                                style={dropDownMenuStyle}
+                                onChange={this.handleCategoryOptionChange}
+                            >
+                                {this.state.departments.map((item, idx) =>
                                     <MenuItem value={idx} key={idx} label={item} primaryText={item} />
                                 )}
                             </DropDownMenu>
