@@ -5,6 +5,7 @@ import Item from "./Item";
 import { connect } from 'react-redux';
 import { addItemToCart } from '../actions/UserActions';
 import axios from "axios";
+import Filters from "./Filters";
 
 require('./stylesheets/Posts.css');
 
@@ -14,15 +15,19 @@ class Posts extends Component {
         super(props);
         this.state = {
             items: items,
-            shownItems: 32 // number of items shown initially
+            shownItems: 32, // number of items shown initially
+            countries: []
+
         };
         this.showMoreItems = this.showMoreItems.bind(this);
         this.getStoreItems = this.getStoreItems.bind(this);
+        this.getStoreCountries = this.getStoreCountries.bind(this);
     }
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
         this.getStoreItems();
+        this.getStoreCountries();
     }
 
     showMoreItems() {
@@ -30,6 +35,17 @@ class Posts extends Component {
             shownItems: this.state.shownItems >= this.state.items.length ?
                 this.state.shownItems : this.state.shownItems + 5 // shows 5 more items when this is called
         })
+    }
+
+    getStoreCountries() {
+        let result = [];
+        this.state.items.map((item) => {
+            if (result.indexOf(item.store) === -1) {
+                result.push(item.store);
+                console.log(item.store);
+            }
+        });
+        this.setState({countries: result});
     }
 
     // Sends a GET request for items data to API.
@@ -66,6 +82,7 @@ class Posts extends Component {
             );
         return (
             <div className="posts">
+                <Filters countries={this.state.countries}/>
                 {items}
                 <div ref={(el) => this.bottom = el}/>
             </div>
