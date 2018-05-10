@@ -37,8 +37,9 @@
 }
 
 @media only screen and (max-width: 768px) {
-    #filters-subtitle {
-
+    .product-filters {
+        width: 100%;
+        margin: 1.5em 0;
     }
 }
 
