@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 import items from '../mock/mock_items.json';
 import Item from "./Item";
-
 import { connect } from 'react-redux';
 import { addItemToCart } from '../actions/UserActions';
 import axios from "axios";
-import Filters from "./Filters";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
+import { DropDownMenu, MenuItem, MuiThemeProvider } from "material-ui";
 
 require('./stylesheets/Posts.css');
+require('./stylesheets/Filters.css');
+
+let dropDownMenuStyle = {
+    margin: '0em 0em 0.25em 0.25em',
+    padding: '0'
+};
+
+let menuItemStyle = {
+    color: 'black'
+};
 
 class Posts extends Component {
 
@@ -16,18 +27,23 @@ class Posts extends Component {
         this.state = {
             items: items,
             shownItems: 32, // number of items shown initially
-            countries: []
-
+            countries: [],
+            availabilityOptions: [
+                'In stock',
+                'Out of stock'
+            ],
+            storeValue: 0,
+            inStockFilter: 0
         };
         this.showMoreItems = this.showMoreItems.bind(this);
         this.getStoreItems = this.getStoreItems.bind(this);
-        this.getStoreCountries = this.getStoreCountries.bind(this);
+        this.mapStoreCountries = this.mapStoreCountries.bind(this);
     }
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
         this.getStoreItems();
-        this.getStoreCountries();
+        this.mapStoreCountries();
     }
 
     showMoreItems() {
@@ -37,12 +53,11 @@ class Posts extends Component {
         })
     }
 
-    getStoreCountries() {
+    mapStoreCountries() {
         let result = [];
         this.state.items.map((item) => {
             if (result.indexOf(item.store) === -1) {
                 result.push(item.store);
-                console.log(item.store);
             }
         });
         this.setState({countries: result});
@@ -70,8 +85,25 @@ class Posts extends Component {
         }
     };
 
+    filterItems() {
+        let result = [];
+        let inStock = this.state.inStockFilter === 0;
+        this.state.items.map((item) => {
+            if (item.store === this.state.countries[this.state.storeValue] && // compares item attributes to filter opts
+                item.instock === inStock) {
+                result.push(item);
+            }
+        });
+        return result;
+    }
+
+    handleStoreOptionChange = (event, index, value) => this.setState({storeValue: value});
+
+    handleAvailabilityOptionChange = (event, index, value) => this.setState({inStockFilter: value});
+
     render() {
-        const items = this.state.items
+        const filteredItems = this.filterItems();
+        const items = filteredItems
             .slice(0, this.state.shownItems) // shows only a certain amount of items at once
             .map((item, idx) =>
                 <Item
@@ -80,9 +112,40 @@ class Posts extends Component {
                     addToCartClick={() => this.props.addToCart(item)}
                 />
             );
+
         return (
             <div className="posts">
-                <Filters countries={this.state.countries}/>
+                <div className="product-filters">
+                    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+                        <p id="filters-main-title">SORT BY</p>
+                        <div id="filter-wrapper">
+                            <p id="filters-subtitle">Country</p>
+                            <DropDownMenu
+                                value={this.state.storeValue}
+                                menuItemStyle={menuItemStyle}
+                                style={dropDownMenuStyle}
+                                onChange={this.handleStoreOptionChange}
+                            >
+                                {this.state.countries.map((item, idx) =>
+                                    <MenuItem value={idx} key={idx} label={item} primaryText={item} />
+                                )}
+                            </DropDownMenu>
+                        </div>
+                        <div id="filter-wrapper">
+                            <p id="filters-subtitle">Stock</p>
+                            <DropDownMenu
+                                value={this.state.inStockFilter}
+                                menuItemStyle={menuItemStyle}
+                                style={dropDownMenuStyle}
+                                onChange={this.handleAvailabilityOptionChange}
+                            >
+                                {this.state.availabilityOptions.map((item, idx) =>
+                                    <MenuItem value={idx} key={idx} label={item} primaryText={item} />
+                                )}
+                            </DropDownMenu>
+                        </div>
+                    </MuiThemeProvider>
+                </div>
                 {items}
                 <div ref={(el) => this.bottom = el}/>
             </div>

@@ -1,6 +1,6 @@
 .product-filters {
     width: 90%;
-    height: 75px;
+    height: 85px;
     margin: 2em;
     color: black;
     background-color: whitesmoke;
@@ -10,8 +10,41 @@
 }
 
 #filters-subtitle {
-    font-weight: 600;
-    letter-spacing: 1px;
-    width: 8%;
-    margin: 1em;
+    font-weight: 400;
+    letter-spacing: 2px;
+    /*margin: 1em 0 1em 1em;*/
+    word-wrap: break-word;
+    font-size: 1.25em;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0.2em 0 0 0;
+}
+
+#filters-main-title {
+    border-bottom: 2px solid #EEE;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    word-wrap: break-word;
+    margin: 1em 0.25em;
+    text-align: center;
+    width: 75px;
+
+    /* Flipping it */
+    -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+    -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+    -webkit-transform: rotate(-90.0deg);  /* Saf3.1+, Chrome */
+}
+
+@media only screen and (max-width: 768px) {
+    #filters-subtitle {
+
+    }
+}
+
+#filter-wrapper {
+    display: block;
+    min-width: 150px;
+    max-width: 150px;
+    border-right: 2px solid #EEE;
 }
