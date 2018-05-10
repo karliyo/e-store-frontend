@@ -12,4 +12,4 @@ Run the application:
 `yarn start` or `npm start`
 
 ## Live demo
-[https://karliyo.github.io/e-store-frontend]()
+[karliyo.github.io/e-store-frontend](https://karliyo.github.io/e-store-frontend)
