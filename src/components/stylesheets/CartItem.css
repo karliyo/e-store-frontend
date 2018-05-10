@@ -41,10 +41,37 @@
 
 #cart-item-price {
     font-weight: 600;
+    line-height: 0.5;
 }
 
 #item-title {
     font-weight: 400;
     font-size: 1.5em;
     margin-left: 1em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+
+.cart-quantity-wrapper {
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+}
+
+#cart-controls {
+    width: 85px;
+    height: 35%;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.2), 0 2px 5px 0 rgba(0,0,0,0.19);
+    text-align: center;
+    margin-left: 1.5em;
+    display: inline-block;
+}
+
+#cart-controls div {
+    margin: 0.1em;
+}
+
+#cart-item-quantity {
+    width: 35%;
+    letter-spacing: 1px;
 }

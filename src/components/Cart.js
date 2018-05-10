@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeItemFromCart } from '../actions/UserActions';
+import {increaseQuantity, reduceQuantity, removeItemFromCart} from '../actions/UserActions';
 
 import CartItem from "./CartItem";
 
@@ -36,7 +36,9 @@ class Cart extends Component {
         const cartContent = this.props.cart.map((item, idx) => {
             return <CartItem
                 key={idx}
-                onClick={() => this.props.removeFromCart(item)}
+                onClickRemove={() => this.props.removeFromCart(item)}
+                onClickReduce={() => this.props.reduceQuantity(item)}
+                onClickIncrease={() => this.props.increaseQuantity(item)}
                 {...item} />
         });
         this.calculateTotalPrice(this.props.cart);
@@ -73,7 +75,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { removeFromCart: item => dispatch(removeItemFromCart(item)) }
+    return {
+        removeFromCart: item => dispatch(removeItemFromCart(item)),
+        reduceQuantity: item => dispatch(reduceQuantity(item)),
+        increaseQuantity: item => dispatch(increaseQuantity(item))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

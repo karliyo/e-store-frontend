@@ -11,3 +11,17 @@ export function removeItemFromCart(item) {
       item
   };
 }
+
+export function reduceQuantity(item) {
+    return {
+        type: 'DECREASE_QUANTITY',
+        item
+    };
+}
+
+export function increaseQuantity(item) {
+    return {
+        type: 'INCREASE_QUANTITY',
+        item
+    };
+}

@@ -16,13 +16,18 @@ export default function cart(state = initialState.cart, action) {
                 return [...state];
             }
         case 'REMOVE_FROM_CART':
-            let itemToRemove = state[state.indexOf(action.item)];
-            if (itemToRemove.quantity === 1) { // removes item completely if there's on
+            return state.filter(item => item.id !== action.item.id);
+        case 'DECREASE_QUANTITY':
+            let itemToReduce = state[state.indexOf(action.item)];
+            if (itemToReduce.quantity === 1) { // removes item completely if there's only one
                 return state.filter(item => item.id !== action.item.id);
             } else {
-                itemToRemove.quantity--;
+                itemToReduce.quantity--;
                 return [...state];
             }
+        case 'INCREASE_QUANTITY':
+            state[state.indexOf(action.item)].quantity++;
+            return [...state];
         default:
             return state;
     }
