@@ -1,7 +1,8 @@
 $muted-grey: #999;
 $purple: #8300ff;
+$red: #ff0000;
 $white: #fff;
-
+$yellow: yellow;
 $base-shadow: rgba(0, 0, 0, 0.12);
 $purple-shadow-from: rgba(131, 0, 255, 0.42);
 $purple-shadow-to: rgba(131, 0, 255, 0.2);
@@ -30,6 +31,18 @@ $purple-box-shadow: 0 14px 26px -12px $purple-shadow-from, 0 4px 23px 0px $base-
     &:hover {
       opacity: 0.8;
       box-shadow: $purple-box-shadow;
+    }
+  }
+  .close-button {
+    background: $red;
+    border: 1px solid $red;
+    color: $white;
+    padding: 5px 10px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    &:hover {
+      opacity: 0.9;
+      box-shadow: orangered;
     }
   }
 }

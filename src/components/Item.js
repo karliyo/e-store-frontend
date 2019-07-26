@@ -27,9 +27,18 @@ export default function Item(props) {
       {/* <div id="add-to-cart"> */}
       {/* <button><span>View</span></button> */}
       {/* </div> */}
-      {modalOpen
-        ? <ItemModal {...props} modalOpen={modalOpen} onCloseModal={closeModal} onButtonClick={props.addToCartClick} />
-        : null}
+      {
+        modalOpen
+          ? (
+            <ItemModal
+              {...props}
+              modalOpen={modalOpen}
+              onCloseModal={closeModal}
+              onButtonClick={props.addToCartClick}
+            />
+          )
+          : null
+      }
       <img className="item-image" onClick={onClick} src={props.image} alt="" />
     </div>
   );

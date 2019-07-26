@@ -11,13 +11,13 @@ process.traceDeprecation = true;
 const IS_DEV = process.env.NODE_ENV === 'development';
 const mode = IS_DEV ? 'development' : 'production';
 
-const CONST_BASE_PATH = process.env.BASE_PATH || (IS_DEV ? '/' : '/');
+const CONST_BASE_PATH = process.env.BASE_PATH || '/';
 
 module.exports = {
   mode,
   entry: {
     client: [
-      './src/index',
+      '../src/index',
       'svgxuse',
     ],
   },

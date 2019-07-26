@@ -5,6 +5,7 @@ import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../actions
 import CartReducer, { initialState } from '../reducers/CartReducer';
 import StoreContext from './store/store.context';
 import './stylesheets/Cart.scss';
+import NinjaButton from './NinjaButton';
 
 const checkoutButton = {
   color: '#FFF',
@@ -53,11 +54,7 @@ export default function Cart() {
               Subtotal <p id="cart-total-price">{totalPrice} EUR</p>
             </div>
             <div id="button-wrapper">
-              <div className="button-wrapper">
-                <button type="button" label="Checkout" className="ninja-button">
-                  <p>Checkout</p>
-                </button>
-              </div>
+              <NinjaButton text="Checkout" />
             </div>
           </div>
         </div>

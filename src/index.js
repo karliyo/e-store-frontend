@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import registerServiceWorker from './registerServiceWorker';
-import Store from './store';
+import Store from './helpers/store';
 import App from './App';
 import './index.css';
-import { saveState } from './localstorage';
+import { saveState } from './helpers/localstorage';
 
 const storeInstance = Store();
 
@@ -24,5 +23,3 @@ ReactDOM.render((
     </BrowserRouter>
   </Provider>),
 document.getElementById('root'));
-
-registerServiceWorker();

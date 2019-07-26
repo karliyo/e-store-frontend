@@ -34,7 +34,7 @@ export default function Posts() {
   };
 
   const [state, setState] = useState(initialState);
-  const [a, updateCart] = useReducer(CartReducer, initialCart);
+  const [a, updateCart] = useReducer(CartReducer, initialCart.cart);
 
   const showMoreItems = () => {
     setState(prevState => ({

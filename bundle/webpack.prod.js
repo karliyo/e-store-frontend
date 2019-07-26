@@ -22,13 +22,13 @@ const webpackConfig = {
     ],
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '../dist'),
     filename: 'pro.[name].js',
     publicPath: CONST_BASE_PATH,
   },
   resolve: {
     alias: {
-      lang: path.resolve(__dirname, 'assets/lang'),
+      lang: path.resolve(__dirname, './assets/lang'),
     },
   },
   stats: {
@@ -41,7 +41,7 @@ const webpackConfig = {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'assets/resources',
+        from: './bundle/assets/resources',
         to: 'resources',
       },
     ]),
@@ -54,7 +54,7 @@ const webpackConfig = {
     }),
     new HtmlWebpackPlugin({
       title: 'E-store frontend',
-      template: path.join(__dirname, 'assets/index.html'),
+      template: path.join(__dirname, './assets/index.html'),
       inject: false,
       title: 'E-store frontend',
     }),
@@ -105,7 +105,7 @@ const webpackConfig = {
     rules: [{
       test: /\.(js|jsx)$/, // allows both .jsx and .js
       exclude: /node_modules/,
-      include: path.join(__dirname, 'src'),
+      include: path.join(__dirname, '../src'),
       use: [
         {
           loader: 'babel-loader',

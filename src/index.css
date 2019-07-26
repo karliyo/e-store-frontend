@@ -1,6 +1,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto";
   background-color: #F5F5F5;
+}
+
+body, body * {
+  font-family: "Roboto";
 }

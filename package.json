@@ -5,9 +5,9 @@
 	"description": "E-store frontend",
 	"homepage": "https://karliyo.github.io/e-store-frontend/",
 	"scripts": {
-		"start": "nodemon --exec \"cross-env NODE_ENV=development webpack-dev-server -d --progress --colors --config webpack.dev.js\"",
+		"start": "nodemon --exec \"cross-env NODE_ENV=development webpack-dev-server -d --progress --colors --config bundle/webpack.dev.js\"",
 		"prebundleDISABLED": "npm run test",
-		"bundle": "cross-env NODE_ENV=production webpack -p --config webpack.prod.js --hide-modules --display-optimization-bailout",
+		"bundle": "cross-env NODE_ENV=production webpack -p --config bundle/webpack.prod.js --hide-modules --display-optimization-bailout",
 		"lint": "eslint src --fix",
 		"test": "jest",
 		"test-watch": "jest --watch"

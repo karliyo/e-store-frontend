@@ -3,7 +3,7 @@ module.exports = (api) => {
     [
       'module-resolver', {
         root: [
-          './src/ee',
+          './src',
           'assets'
         ],
         alias: {

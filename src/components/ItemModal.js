@@ -1,6 +1,7 @@
 import React from 'react';
 
-require('./stylesheets/ItemModal.css');
+import NinjaButton from './NinjaButton';
+import './stylesheets/ItemModal.css';
 
 const oosButton = {
   color: '#000',
@@ -25,6 +26,7 @@ export default function ItemModal(props) {
   return props.modalOpen ? (
     <>
       <div
+        className="modal"
         id="item-modal"
         open={props.modalOpen}
         autoDetectWindowHeight
@@ -43,18 +45,19 @@ export default function ItemModal(props) {
             <p className="subtitle">Location</p>
             <p className="item-store-location">{props.store}</p>
 
-            <button
+            <NinjaButton
+              text="Add to cart"
               label="Add to cart"
-              backgroundColor={props.instock ? '#03DAC6' : '#FF0000'}
-              style={props.instock ? instockButton : oosButton}
-              labelStyle={instockButton}
+              className={props.instock ? 'stock-item' : 'oos-item'}
+              // backgroundColor={props.instock ? '#03DAC6' : '#FF0000'}
               disabled={!props.instock}
               onClick={props.onButtonClick}
             />
-            <button
+            <NinjaButton
+              text="X"
               label="Close"
+              className="close-button"
               primary
-              style={closeButtonStyle}
               onClick={props.onCloseModal}
             />
           </div>
