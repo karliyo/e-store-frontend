@@ -1,6 +1,6 @@
 import React from 'react';
 
-require('./stylesheets/CartItem.css');
+import './CartItem.css';
 
 const style = {
   margin: '0.1em',
