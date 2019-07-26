@@ -36,7 +36,6 @@ const webpackConfig = {
   entry: {
     client: [
       './src/index',
-      'svgxuse',
       'core-js/stable',
       'regenerator-runtime/runtime',
     ],

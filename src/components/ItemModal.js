@@ -28,10 +28,6 @@ export default function ItemModal(props) {
       <div
         className="modal"
         id="item-modal"
-        open={props.modalOpen}
-        autoDetectWindowHeight
-        autoScrollBodyContent
-        contentStyle={dialogStyle}
       >
         <div className="modal-content-wrapper">
           <div className="modal-left-column">
@@ -57,7 +53,6 @@ export default function ItemModal(props) {
               text="X"
               label="Close"
               className="close-button"
-              primary
               onClick={props.onCloseModal}
             />
           </div>

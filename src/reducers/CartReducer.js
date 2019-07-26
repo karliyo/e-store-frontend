@@ -3,12 +3,10 @@ export const initialState = {
 };
 
 export default function cart(state = initialState.cart, action) {
-  console.log(action, state);
   switch (action.type) {
     case 'ADD_TO_CART':
       if (state.length === 0) { // if no items in cart yet
         action.item.quantity = 1;
-        console.log([...state, action.item]);
         return [...state, action.item];
       }
       const itemIndexInCart = state.indexOf(action.item);

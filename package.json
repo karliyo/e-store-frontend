@@ -63,23 +63,16 @@
 	},
 	"dependencies": {
 		"@babel/runtime": "7.5.5",
-		"axios": "0.19.0",
 		"copy-webpack-plugin": "5.0.4",
 		"core-js": "3.1.4",
 		"history": "4.9.0",
 		"js-file-download": "0.4.7",
-		"prop-types": "15.7.2",
 		"react": "16.8.6",
-		"react-datetime": "2.16.3",
 		"react-dom": "16.8.6",
 		"react-hot-loader": "4.12.9",
-		"react-redux": "7.1.0",
 		"react-router": "5.0.1",
 		"react-router-dom": "5.0.1",
-		"react-router-redux": "4.0.8",
-		"redux": "4.0.4",
 		"regenerator-runtime": "0.13.3",
-		"svgxuse": "1.2.6",
 		"use-dark-mode": "2.3.1"
 	},
 	"jest": {

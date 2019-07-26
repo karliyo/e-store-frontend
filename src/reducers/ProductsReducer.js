@@ -1,6 +1,6 @@
-import items from '../mock/mock_items.json';
+// import items from '../mock/mock_items_less.json';
 
-export const initialState = items;
+export const initialState = [];
 
 export default function products(state = initialState) {
   return state;

@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import Posts from './components/Posts';
 import Cart from './components/Cart';
 import StoreContext from './components/store/store.context';
-
+import CartReducer, { initialState as initialCart } from './reducers/CartReducer';
+import ProductsReducer, { initialState as initialProducts } from './reducers/ProductsReducer';
+import { saveState } from './helpers/localstorage';
 import './App.css';
 
 export default function App() {
+  const [cart, updateCart] = useReducer(CartReducer, initialCart.cart);
+  const [products, updateProducts] = useReducer(ProductsReducer, initialProducts);
+
+  useEffect(() => {
+    saveState(cart);
+  }, [cart]);
+
   return (
-    <div className="main-wrapper">
-      <Header />
-      <StoreContext.Provider>
+    <StoreContext.Provider value={{
+      cart: {
+        items: cart,
+        action: updateCart,
+      },
+      products: {
+        items: products,
+        action: updateProducts,
+      },
+    }}
+    >
+      <div className="main-wrapper">
+        <Header />
         <Switch>
           <Route exact path="/" component={Posts} />
           <Route exact path="/cart" component={Cart} />
         </Switch>
-      </StoreContext.Provider>
-    </div>
+      </div>
+    </StoreContext.Provider>
   );
 }

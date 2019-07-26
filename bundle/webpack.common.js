@@ -17,8 +17,7 @@ module.exports = {
   mode,
   entry: {
     client: [
-      '../src/index',
-      'svgxuse',
+      '../src/index'
     ],
   },
   output: {

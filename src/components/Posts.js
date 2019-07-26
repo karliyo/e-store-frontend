@@ -1,12 +1,11 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useReducer, useState, useContext } from 'react';
 import { addItemToCart } from '../actions/UserActions';
-import { initialState as items } from '../reducers/ProductsReducer';
 import CartReducer, { initialState as initialCart } from '../reducers/CartReducer';
 import Item from './Item';
 import FilterContainer from './FilterContainer';
 import './stylesheets/Posts.css';
 import './stylesheets/Filters.css';
+import StoreContext from './store/store.context';
 
 const dropDownMenuStyle = {
   margin: '0em 0em 0.25em 0.25em',
@@ -23,8 +22,17 @@ const availabilityOptions = [
 ];
 
 export default function Posts() {
+  const {
+    products: {
+      items: products,
+    },
+    cart: {
+      action: updateCart,
+    },
+  } = useContext(StoreContext);
+
   const initialState = {
-    items,
+    items: products,
     shownItems: 32, // number of items shown initially
     countries: [],
     departments: [],
@@ -34,7 +42,6 @@ export default function Posts() {
   };
 
   const [state, setState] = useState(initialState);
-  const [a, updateCart] = useReducer(CartReducer, initialCart.cart);
 
   const showMoreItems = () => {
     setState(prevState => ({
@@ -133,16 +140,16 @@ export default function Posts() {
         </>
       </div>
       {
-        filterItems()
-          .slice(0, state.shownItems) // shows only a certain amount of items at once
-          .map((item, idx) => (
-            <Item
-              {...item}
-              key={idx}
-              addToCartClick={() => updateCart(addItemToCart(item))}
-            />
-          ))
-      }
+          filterItems()
+            .slice(0, state.shownItems) // shows only a certain amount of items at once
+            .map((item, idx) => (
+              <Item
+                {...item}
+                key={idx}
+                addToCartClick={() => updateCart(addItemToCart(item))}
+              />
+            ))
+        }
     </div>
   );
 }
