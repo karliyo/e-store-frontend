@@ -1,7 +1,7 @@
 import React from 'react';
 
-import NinjaButton from './NinjaButton';
-import './stylesheets/ItemModal.css';
+import NinjaButton from '../../../goodies/ninjaButton';
+import './ItemModal.css';
 
 const oosButton = {
   color: '#000',

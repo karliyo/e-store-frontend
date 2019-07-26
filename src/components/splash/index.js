@@ -1,11 +1,10 @@
-import React, { useEffect, useReducer, useState, useContext } from 'react';
-import { addItemToCart } from '../actions/UserActions';
-import CartReducer, { initialState as initialCart } from '../reducers/CartReducer';
-import Item from './Item';
-import FilterContainer from './FilterContainer';
-import './stylesheets/Posts.css';
-import './stylesheets/Filters.css';
-import StoreContext from './store/store.context';
+import React, { useEffect, useState, useContext } from 'react';
+import { addItemToCart } from '../../actions/UserActions';
+import Item from './item/Item';
+import FilterContainer from './filters';
+import './Splash.css';
+import './filters/Filters.css';
+import StoreContext from '../../context/store.context';
 
 const dropDownMenuStyle = {
   margin: '0em 0em 0.25em 0.25em',

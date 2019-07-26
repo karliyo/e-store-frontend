@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ItemModal from './ItemModal';
+import ItemModal from './modal/ItemModal';
 
-import './stylesheets/Item.css';
+import './Item.css';
 
 export default function Item(props) {
   const state = {

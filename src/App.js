@@ -1,12 +1,12 @@
 import React, { useReducer, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
-import Posts from './components/Posts';
-import Cart from './components/Cart';
-import StoreContext from './components/store/store.context';
+import Header from './components/header/Header';
+import Posts from './components/splash';
+import Cart from './components/cart/container';
+import StoreContext from './context/store.context';
 import CartReducer, { initialState as initialCart } from './reducers/CartReducer';
 import ProductsReducer, { initialState as initialProducts } from './reducers/ProductsReducer';
-import { saveState } from './helpers/localstorage';
+import { saveState } from './utils/localstorage';
 import './App.css';
 
 export default function App() {

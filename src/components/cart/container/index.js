@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import CartItem from './CartItem';
-import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../actions/UserActions';
-import StoreContext from './store/store.context';
-import './stylesheets/Cart.scss';
-import NinjaButton from './NinjaButton';
+import CartItem from '../item/CartItem';
+import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../../../actions/UserActions';
+import StoreContext from '../../../context/store.context';
+import './Cart.scss';
+import NinjaButton from '../../goodies/ninjaButton';
 
 export default function Cart() {
   const [totalPrice, updatePrice] = useState(0);
