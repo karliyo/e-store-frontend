@@ -1,5 +1,7 @@
-import initialState from './InitialState';
+import items from '../mock/mock_items.json';
 
-export default function products(state = initialState.products) {
-    return state;
-};
+export const initialState = items;
+
+export default function products(state = initialState) {
+  return state;
+}

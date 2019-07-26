@@ -1,46 +1,36 @@
-import React, { Component } from 'react';
-import ItemModal from "./ItemModal";
+import React, { useState } from 'react';
+import ItemModal from './ItemModal';
 
-require('./stylesheets/Item.css');
+import './stylesheets/Item.css';
 
-export default class Item extends Component {
+export default function Item(props) {
+  const state = {
+    modalOpen: false,
+  };
 
-    constructor(props) {
-        super(props);
-        this.onClick = this.onClick.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.state = {
-            modalOpen: false
-        }
-    }
+  const [modalOpen, setModalOpen] = useState(state.modalOpen);
 
-    onClick(e) {
-        e.preventDefault();
-        this.setState({
-            modalOpen: true
-        });
-    }
+  const onClick = (e) => {
+    e.preventDefault();
+    setModalOpen(true);
+  };
 
-    closeModal(e) {
-        e.preventDefault();
-        this.setState({
-            modalOpen: false
-        });
-    }
+  const closeModal = (e) => {
+    e.preventDefault();
+    setModalOpen(false);
+  };
 
-    render() {
-        return (
-            <div className="item">
-                <p className="item-title">{this.props.name}</p>
-                <p className="item-price">{this.props.price + " " + this.props.currency}</p>
-                {/*<div id="add-to-cart">*/}
-                    {/*<button><span>View</span></button>*/}
-                {/*</div>*/}
-                {this.state.modalOpen ?
-                    <ItemModal {...this.props} modalOpen={this.state.modalOpen} onCloseModal={this.closeModal} onButtonClick={this.props.addToCartClick}/>
-                    : null}
-                <img className="item-image" onClick={this.onClick} src={this.props.image} alt=''/>
-            </div>
-        )
-    }
+  return (
+    <div className="item">
+      <p className="item-title">{props.name}</p>
+      <p className="item-price">{`${props.price} ${props.currency}`}</p>
+      {/* <div id="add-to-cart"> */}
+      {/* <button><span>View</span></button> */}
+      {/* </div> */}
+      {modalOpen
+        ? <ItemModal {...props} modalOpen={modalOpen} onCloseModal={closeModal} onButtonClick={props.addToCartClick} />
+        : null}
+      <img className="item-image" onClick={onClick} src={props.image} alt="" />
+    </div>
+  );
 }

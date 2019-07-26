@@ -1,85 +1,67 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {increaseQuantity, reduceQuantity, removeItemFromCart} from '../actions/UserActions';
+import React, { useReducer, useEffect } from 'react';
 
-import CartItem from "./CartItem";
+import CartItem from './CartItem';
+import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../actions/UserActions';
+import CartReducer, { initialState } from '../reducers/CartReducer';
+import StoreContext from './store/store.context';
+import './stylesheets/Cart.scss';
 
-import { MuiThemeProvider, RaisedButton } from "material-ui";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
-
-require('./stylesheets/Cart.css');
-
-let checkoutButton = {
-    color: '#FFF',
-    paddingBottom: '0',
-    textAlign: 'center',
-    width: '80%'
+const checkoutButton = {
+  color: '#FFF',
+  paddingBottom: '0',
+  textAlign: 'center',
+  width: '80%',
 };
 
 let totalPrice;
 
-class Cart extends Component {
+export default function Cart() {
+  const [cart, updateCart] = useReducer(CartReducer, initialState.cart);
 
-    componentDidUpdate() {
-        this.calculateTotalPrice(this.props.cart);
+  const calculateTotalPrice = () => {
+    totalPrice = 0;
+    for (let i = 0; i < cart.length; i += 1) {
+      totalPrice += cart[i].price * cart[i].quantity; // assuming they are all in same currency.
     }
+  };
 
-    calculateTotalPrice(cart) {
-        totalPrice = 0;
-        for (let i = 0; i < cart.length; i++) {
-            totalPrice += cart[i].price * cart[i].quantity; // assuming they are all in same currency.
-        }
-    }
+  useEffect(() => {
+    calculateTotalPrice(cart);
+  }, cart);
 
-    render() {
-        const cartContent = this.props.cart.map((item, idx) => {
-            return <CartItem
-                key={idx}
-                onClickRemove={() => this.props.removeFromCart(item)}
-                onClickReduce={() => this.props.reduceQuantity(item)}
-                onClickIncrease={() => this.props.increaseQuantity(item)}
-                {...item} />
-        });
-        const emptyCart = () => { return (<div id="empty-cart">No items yet..</div>) };
-        this.calculateTotalPrice(this.props.cart);
-        return (
-            <div className="cart">
-                <p id="cart-title">Your shopping cart</p>
+  const cartContent = cart.map((item, idx) => (
+    <CartItem
+      key={idx}
+      onClickRemove={() => updateCart(removeItemFromCart(null))}
+      onClickReduce={() => updateCart(reduceQuantity(null))}
+      onClickIncrease={() => updateCart(increaseQuantity(null))}
+      {...item}
+    />
+  ));
+  const emptyCart = () => (<div id="empty-cart">No items yet..</div>);
+  calculateTotalPrice(cart);
+  return (
+    <StoreContext.Provider value={updateCart}>
+      <div className="cart">
+        <p id="cart-title">Your shopping cart</p>
 
-                <div className="cart-content">
-                    <div className="cart-items">{ cartContent.length > 0 ? cartContent : emptyCart()}</div>
-                    <div className="cart-total">
-                        <p id="cart-total-title">Total</p>
-                        <p id="cart-subtitle">Subtotal <p id="cart-total-price">{totalPrice} EUR</p></p>
-
-                        <div id="button-wrapper">
-                            <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-                                <RaisedButton
-                                    label="Checkout"
-                                    backgroundColor={'#03DAC6'}
-                                    style={checkoutButton}
-                                    labelStyle={checkoutButton}
-                                />
-                            </MuiThemeProvider>
-                        </div>
-                    </div>
-                </div>
+        <div className="cart-content">
+          <div className="cart-items">{ cartContent.length > 0 ? cartContent : emptyCart()}</div>
+          <div className="cart-total">
+            <p id="cart-total-title">Total</p>
+            <div id="cart-subtitle">
+              Subtotal <p id="cart-total-price">{totalPrice} EUR</p>
             </div>
-        );
-    };
+            <div id="button-wrapper">
+              <div className="button-wrapper">
+                <button type="button" label="Checkout" className="ninja-button">
+                  <p>Checkout</p>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </StoreContext.Provider>
+  );
 }
-
-function mapStateToProps(state) {
-    return { cart: state.cart };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        removeFromCart: item => dispatch(removeItemFromCart(item)),
-        reduceQuantity: item => dispatch(reduceQuantity(item)),
-        increaseQuantity: item => dispatch(increaseQuantity(item))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);

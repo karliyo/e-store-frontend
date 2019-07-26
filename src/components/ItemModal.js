@@ -1,71 +1,65 @@
-import React, { Component } from 'react';
-
-import { Dialog, MuiThemeProvider, RaisedButton } from "material-ui";
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import React from 'react';
 
 require('./stylesheets/ItemModal.css');
 
-let oosButton = {
-    color: '#000',
-    paddingBottom: '10px'
+const oosButton = {
+  color: '#000',
+  paddingBottom: '10px',
 };
 
-let instockButton = {
-    color: '#FFF',
-    paddingBottom: '0'
+const instockButton = {
+  color: '#FFF',
+  paddingBottom: '0',
 };
 
-let dialogStyle = {
-    width: '90%'
+const dialogStyle = {
+  width: '90%',
 };
 
-let closeButtonStyle = {
-    marginLeft: '2rem'
+const closeButtonStyle = {
+  marginLeft: '2rem',
 };
 
 
-export default class ItemModal extends Component {
-    render() {
-        return (
-            <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-                <Dialog
-                    id="item-modal"
-                    open={this.props.modalOpen}
-                    autoDetectWindowHeight={true}
-                    autoScrollBodyContent={true}
-                    contentStyle={dialogStyle}
-                >
-                    <div className="modal-content-wrapper">
-                        <div className="modal-left-column">
-                            <p className="item-title">{this.props.name}</p>
-                            <p className="item-price">{this.props.price + " " + this.props.currency}</p>
-                            <img className="item-image" src={this.props.image} alt=''/>
-                        </div>
-                        <div className="modal-right-column">
-                            <p className="subtitle">Description</p>
-                            <p className="item-description">{this.props.description}</p>
-                            <p className="subtitle">Location</p>
-                            <p className="item-store-location">{this.props.store}</p>
+export default function ItemModal(props) {
+  return props.modalOpen ? (
+    <>
+      <div
+        id="item-modal"
+        open={props.modalOpen}
+        autoDetectWindowHeight
+        autoScrollBodyContent
+        contentStyle={dialogStyle}
+      >
+        <div className="modal-content-wrapper">
+          <div className="modal-left-column">
+            <p className="item-title">{props.name}</p>
+            <p className="item-price">{`${props.price} ${props.currency}`}</p>
+            <img className="item-image" src={props.image} alt="" />
+          </div>
+          <div className="modal-right-column">
+            <p className="subtitle">Description</p>
+            <p className="item-description">{props.description}</p>
+            <p className="subtitle">Location</p>
+            <p className="item-store-location">{props.store}</p>
 
-                            <RaisedButton
-                                label="Add to cart"
-                                backgroundColor={this.props.instock ? '#03DAC6' : '#FF0000'}
-                                style={this.props.instock ? instockButton : oosButton}
-                                labelStyle={instockButton}
-                                disabled={!this.props.instock}
-                                onClick={this.props.onButtonClick}
-                            />
-                            <RaisedButton
-                                label="Close"
-                                primary={true}
-                                style={closeButtonStyle}
-                                onClick={this.props.onCloseModal}
-                            />
-                        </div>
-                    </div>
-                </Dialog>
-            </MuiThemeProvider>
-        );
-    }
+            <button
+              label="Add to cart"
+              backgroundColor={props.instock ? '#03DAC6' : '#FF0000'}
+              style={props.instock ? instockButton : oosButton}
+              labelStyle={instockButton}
+              disabled={!props.instock}
+              onClick={props.onButtonClick}
+            />
+            <button
+              label="Close"
+              primary
+              style={closeButtonStyle}
+              onClick={props.onCloseModal}
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  ) : null;
 }
