@@ -59,12 +59,17 @@
 }
 
 #cart-controls {
-    width: 85px;
+    width: 60%;
     height: 30px;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,0.2), 0 2px 5px 0 rgba(0,0,0,0.19);
     text-align: center;
     margin-left: 1.5em;
-    display: inline-block;
+    display: flex;
+    justify-content: space-evenly;
+    & > .icon > svg {
+      margin: 0.1em;
+      color: black;
+    }
 }
 
 #cart-controls div {

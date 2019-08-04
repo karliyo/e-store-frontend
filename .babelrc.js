@@ -7,8 +7,13 @@ module.exports = (api) => {
           'assets'
         ],
         alias: {
+          '@assets': './bundle/assets',
+          '@icons': './src/images/icons',
           '@root': './src',
           '@actions': './src/actions',
+          '@actionTypes': './src/constants/actionTypes',
+          '@data': './src/api',
+          '@constants': './src/constants',
           '@components': './src/components',
           '@utils': './src/utils',
           '@reducers': './src/reducers',
@@ -23,7 +28,7 @@ module.exports = (api) => {
     '@babel/plugin-proposal-optional-chaining'
   ];
 
-  if (api.env('development')) {
+  if (!!api.env('development')) {
     plugins.unshift('react-hot-loader/babel');
   }
 

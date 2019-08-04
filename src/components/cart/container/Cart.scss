@@ -4,13 +4,28 @@ $red: #ff0000;
 $white: #fff;
 $yellow: yellow;
 $base-shadow: rgba(0, 0, 0, 0.12);
+
 $purple-shadow-from: rgba(131, 0, 255, 0.42);
 $purple-shadow-to: rgba(131, 0, 255, 0.2);
 $purple-box-shadow: 0 14px 26px -12px $purple-shadow-from, 0 4px 23px 0px $base-shadow,
   0 8px 10px -5px $purple-shadow-to;
 
+$red-shadow-from: rgba(255, 76, 76, 0.65);
+$red-shadow-to: rgba(255, 76, 76, 0.65);
+$red-box-shadow: 0 14px 26px -12px $red-shadow-from, 0 4px 23px 0px $base-shadow,
+  0 8px 10px -5px $red-shadow-to;
+
 .button-wrapper {
   padding: 10px 0;
+
+  &.close-button-wrapper {
+    padding-top: 0 !important;
+  }
+
+  & > .close-button {
+    float: right;
+  }
+
   .ninja-button {
     padding: 15px 50px;
     text-transform: uppercase;
@@ -29,8 +44,16 @@ $purple-box-shadow: 0 14px 26px -12px $purple-shadow-from, 0 4px 23px 0px $base-
       font-size: 1.5em;
     }
     &:hover {
-      opacity: 0.8;
+      opacity: 0.9;
       box-shadow: $purple-box-shadow;
+    }
+
+    &.oos-item {
+      background: rgba(255, 76, 76, 1);
+      border: 2px solid rgba(255, 76, 76, 1);
+      &:hover {
+        box-shadow: $red-box-shadow;
+      }
     }
   }
   .close-button {

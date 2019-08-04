@@ -6,11 +6,15 @@ import Cart from '@components/cart/container';
 import StoreContext from '@context/store.context';
 import CartReducer, { initialState as initialCart } from '@reducers/CartReducer';
 import ProductsReducer, { initialState as initialProducts } from '@reducers/ProductsReducer';
+import DepartmentReducer, { initialState as initialDepartments } from '@reducers/DepartmentReducer';
+import StoreReducer, { initialState as initialStores } from '@reducers/StoreReducer';
 import { saveState } from '@utils/localstorage';
 
 export default function App() {
-  const [cart, updateCart] = useReducer(CartReducer, initialCart.cart);
-  const [products, updateProducts] = useReducer(ProductsReducer, initialProducts);
+  const [cart, cartAction] = useReducer(CartReducer, initialCart);
+  const [products, productAction] = useReducer(ProductsReducer, initialProducts);
+  const [departments, departmentAction] = useReducer(DepartmentReducer, initialDepartments);
+  const [stores, storeAction] = useReducer(StoreReducer, initialStores);
 
   useEffect(() => {
     saveState(cart);
@@ -20,11 +24,19 @@ export default function App() {
     <StoreContext.Provider value={{
       cart: {
         items: cart,
-        action: updateCart,
+        action: cartAction,
       },
       products: {
-        items: products,
-        action: updateProducts,
+        state: products,
+        action: productAction,
+      },
+      departments: {
+        state: departments,
+        action: departmentAction,
+      },
+      stores: {
+        state: stores,
+        action: storeAction,
       },
     }}
     >

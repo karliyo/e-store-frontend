@@ -11,6 +11,7 @@ const {
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const history = require('connect-history-api-fallback');
 const proxy = require('http-proxy-middleware');
@@ -42,7 +43,7 @@ const webpackConfig = {
   },
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: 'pro.[name].js',
+    filename: 'front.[name].js',
     publicPath: CONST_BASE_PATH,
   },
   resolve: {
@@ -51,6 +52,37 @@ const webpackConfig = {
     },
   },
   plugins: [
+    new HardSourceWebpackPlugin.ExcludeModulePlugin([{
+      test: /mini-css-extract-plugin[\\/]dist[\\/]loader/,
+    }]),
+    new HardSourceWebpackPlugin({
+      // Either an absolute path or relative to webpack's options.context.
+      cacheDirectory: path.join(process.cwd(), 'node_modules/.cache/hard-source/', '[confighash]'),
+
+      // Either a string of object hash function given a webpack config.
+      // node-object-hash on npm can be used to build this.
+      configHash: (webpackConfig) => require('node-object-hash')({ sort: false }).hash(webpackConfig),
+      // Either false, a string, an object, or a project hashing function.
+      environmentHash: {
+        root: process.cwd(),
+        directories: [],
+        files: ['package-lock.json', '.babelrc.js'],
+      },
+      info: {
+        mode: 'none',
+        level: 'debug',
+      },
+      // Clean up large, old caches automatically.
+      cachePrune: {
+        // Caches younger than `maxAge` are not considered for deletion.
+        // They must be at least this old in milliseconds.
+        maxAge: 3 * 60 * 60 * 1000, // 3 hours
+        // All caches together must be larger than `sizeThreshold` before any
+        // caches will be deleted.
+        // Together they must be at least this big in bytes.
+        sizeThreshold: 50 * 1024 * 1024 // 50 MB
+      },
+    }),
     new HotModuleReplacementPlugin(),
     new BundleAnalyzerPlugin({
       analyzerPort: 8888,
@@ -86,7 +118,12 @@ const webpackConfig = {
     noEmitOnErrors: true,
   },
   module: {
-    rules: [{
+    rules: [
+      {
+        test: /\.svg$/,
+        use: ['babel-loader', 'react-svg-loader'],
+      },
+      {
         test: /\.(js|jsx)$/, // allows both .jsx and .js
         exclude: /node_modules/,
         include: path.join(__dirname, '../src'),

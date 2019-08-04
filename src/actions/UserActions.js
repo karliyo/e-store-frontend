@@ -1,11 +1,17 @@
-const types = {
-  addItemToCart: 'ADD_TO_CART',
-  removeItemFromCart: 'REMOVE_FROM_CART',
-  reduceQuantity: 'DECREASE_QUANTITY',
-  increaseQuantity: 'INCREASE_QUANTITY',
+export const cartAction = {
+  ADD: {
+    type: 'ADD_TO_CART',
+  },
+  REMOVE: {
+    type: 'REMOVE_FROM_CART',
+  },
+  INCREASE: {
+    type: 'INCREASE_QUANTITY',
+  },
+  DECREASE: {
+    type: 'DECREASE_QUANTITY',
+  },
+  UPDATE_TOTAL: {
+    type: 'UPDATE_TOTAL_AMOUNT',
+  },
 };
-
-export const addItemToCart = { type: types.addItemToCart };
-export const removeItemFromCart = { type: types.removeItemFromCart };
-export const reduceQuantity = { type: types.reduceQuantity };
-export const increaseQuantity = { type: types.increaseQuantity };

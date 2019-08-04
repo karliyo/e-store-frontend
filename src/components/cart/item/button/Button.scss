@@ -1,0 +1,12 @@
+.cart-item {
+  .icon {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+  }
+
+  svg {
+    height: 1em;
+    margin: 0 auto;
+  }
+}

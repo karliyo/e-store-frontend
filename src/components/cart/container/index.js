@@ -1,44 +1,32 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import CartItem from '@components/cart/item/CartItem';
-import { increaseQuantity, reduceQuantity, removeItemFromCart } from '@actions/UserActions';
+import { cartAction } from '@actions/UserActions';
 import StoreContext from '@context/store.context';
 import NinjaButton from '@components/goodies/ninjaButton';
 import './Cart.scss';
 
 export default function Cart() {
-  const [totalPrice, updatePrice] = useState(0);
-
   const {
     cart: {
-      items: cart,
+      items: cartState,
       action: updateCart,
     },
   } = useContext(StoreContext);
 
-  const calculateTotalPrice = () => {
-    updatePrice(0);
-    cart.forEach(({
-      price, quantity,
-    }) => updatePrice(prevPrice => prevPrice + price * quantity));
-  };
+  const { cart } = cartState;
 
-  useEffect(() => {
-    calculateTotalPrice(cart);
-  }, [cart]);
-
-  const cartContent = cart.map((item) => (
+  const cartContent = cart.map(item => (
     <CartItem
-      key={`cart-item-${item}`}
-      onClickRemove={() => updateCart({ ...removeItemFromCart, item })}
-      onClickReduce={() => updateCart({ ...reduceQuantity, item })}
-      onClickIncrease={() => updateCart({ ...increaseQuantity, item })}
+      key={`cart-item-${item.id}-${item.name}`}
+      onClickRemove={() => updateCart({ ...cartAction.REMOVE, item })}
+      onClickReduce={() => updateCart({ ...cartAction.DECREASE, item })}
+      onClickIncrease={() => updateCart({ ...cartAction.INCREASE, item })}
       {...item}
     />
   ));
 
   const emptyCart = () => (<div id="empty-cart">No items yet..</div>);
-
   return (
     <div className="cart">
       <p id="cart-title">Your shopping cart</p>
@@ -48,7 +36,7 @@ export default function Cart() {
         <div className="cart-total">
           <p id="cart-total-title">Total</p>
           <div id="cart-subtitle">
-                Subtotal <p id="cart-total-price">{totalPrice} EUR</p>
+                Subtotal <p id="cart-total-price">{cartState.total} EUR</p>
           </div>
           <div id="button-wrapper">
             <NinjaButton text="Checkout" />

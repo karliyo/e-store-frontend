@@ -1,36 +1,63 @@
 export const initialState = {
   cart: [],
+  total: 0,
 };
 
-export default function cart(state = initialState.cart, action) {
-  console.log(action);
+const updateQuantityInCart = (
+  cart, newItem, changeAmount
+) => {
+  if (cart.length === 0) {
+    return {
+      cart: [{
+        ...newItem,
+        quantity: changeAmount,
+      }],
+      total: changeAmount * newItem.price,
+    };
+  }
+
+  let total = 0;
+  return {
+    cart: Object.assign([], cart.map((cartItem) => {
+      const targetItem = cartItem;
+      if (cartItem.id === newItem.id) {
+        if (!cartItem.quantity) {
+          targetItem.quantity = changeAmount;
+        } else {
+          targetItem.quantity += changeAmount;
+        }
+        total += targetItem.quantity * newItem.price;
+      }
+      return targetItem;
+    })),
+    total,
+  };
+};
+
+export default function cartReducer(state = initialState, action) {
+  const { item } = action;
   switch (action.type) {
     case 'ADD_TO_CART':
-      if (state.length === 0) { // if no items in cart yet
-        action.item.quantity = 1;
-        return [...state, action.item];
-      }
-      const itemIndexInCart = state.indexOf(action.item);
-      if (itemIndexInCart === -1) { // item not yet in cart
-        action.item.quantity = 1;
-        return [...state, action.item];
-      } // item already in cart and increasing its quantity
-      state[itemIndexInCart].quantity += 1;
-      return [...state];
-
+      return {
+        ...state,
+        ...updateQuantityInCart(state.cart, action.item, 1),
+      };
     case 'REMOVE_FROM_CART':
-      return state.filter(item => item.id !== action.item.id);
+      return {
+        ...state,
+        cart: state.cart.filter(cartItem => cartItem.id !== item.id),
+        total: state.total - item.quantity * item.price,
+      };
     case 'DECREASE_QUANTITY':
-      const itemToReduce = state[state.indexOf(action.item)];
-      if (itemToReduce.quantity === 1) { // removes item completely if there's only one
-        return state.filter(item => item.id !== action.item.id);
-      }
-      itemToReduce.quantity -= 1;
-      return [...state];
-
+      return {
+        ...state,
+        ...updateQuantityInCart(state.cart, action.item, -1),
+      };
     case 'INCREASE_QUANTITY':
-      state[state.indexOf(action.item)].quantity += 1;
-      return [...state];
+      return {
+        ...state,
+        ...updateQuantityInCart(state.cart, action.item, 1),
+      };
     default:
       return state;
   }

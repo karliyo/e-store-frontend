@@ -22,7 +22,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'pro.[name].js',
+    filename: 'front.[name].js',
     publicPath: CONST_BASE_PATH,
   },
   resolve: {

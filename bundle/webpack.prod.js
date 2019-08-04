@@ -16,13 +16,12 @@ const webpackConfig = {
   entry: {
     client: [
       './src/index',
-      'core-js/stable',
-      'regenerator-runtime/runtime',
+      'svgxuse'
     ],
   },
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: 'pro.[name].js',
+    filename: 'front.[name].js',
     publicPath: CONST_BASE_PATH,
   },
   resolve: {
@@ -101,7 +100,14 @@ const webpackConfig = {
     ],
   },
   module: {
-    rules: [{
+    rules: [
+      {
+        loader: 'react-svg-loader',
+        options: {
+          jsx: true // true outputs JSX tags
+        }
+      },
+      {
       test: /\.(js|jsx)$/, // allows both .jsx and .js
       exclude: /node_modules/,
       include: path.join(__dirname, '../src'),
