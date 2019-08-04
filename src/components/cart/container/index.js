@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import CartItem from '../item/CartItem';
-import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../../../actions/UserActions';
-import StoreContext from '../../../context/store.context';
+import CartItem from '@components/cart/item/CartItem';
+import { increaseQuantity, reduceQuantity, removeItemFromCart } from '@actions/UserActions';
+import StoreContext from '@context/store.context';
+import NinjaButton from '@components/goodies/ninjaButton';
 import './Cart.scss';
-import NinjaButton from '../../goodies/ninjaButton';
 
 export default function Cart() {
   const [totalPrice, updatePrice] = useState(0);
@@ -27,12 +27,12 @@ export default function Cart() {
     calculateTotalPrice(cart);
   }, [cart]);
 
-  const cartContent = cart.map((item, idx) => (
+  const cartContent = cart.map((item) => (
     <CartItem
-      key={idx}
-      onClickRemove={() => updateCart(removeItemFromCart(item))}
-      onClickReduce={() => updateCart(reduceQuantity(item))}
-      onClickIncrease={() => updateCart(increaseQuantity(item))}
+      key={`cart-item-${item}`}
+      onClickRemove={() => updateCart({ ...removeItemFromCart, item })}
+      onClickReduce={() => updateCart({ ...reduceQuantity, item })}
+      onClickIncrease={() => updateCart({ ...increaseQuantity, item })}
       {...item}
     />
   ));

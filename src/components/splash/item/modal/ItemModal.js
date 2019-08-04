@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NinjaButton from '../../../goodies/ninjaButton';
+import NinjaButton from '@components/goodies/ninjaButton';
 import './ItemModal.css';
 
 const oosButton = {

@@ -1,4 +1,4 @@
-import items from '../mock/mock_items.json';
+import items from '@root/mock/mock_items.json';
 
 export const initialState = items;
 

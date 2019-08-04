@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { addItemToCart } from '../../actions/UserActions';
+import { addItemToCart } from '@actions/UserActions';
+import StoreContext from '@context/store.context';
 import Item from './item/Item';
 import FilterContainer from './filters';
 import './Splash.css';
 import './filters/Filters.css';
-import StoreContext from '../../context/store.context';
 
 const dropDownMenuStyle = {
   margin: '0em 0em 0.25em 0.25em',
@@ -145,7 +145,7 @@ export default function Posts() {
               <Item
                 {...item}
                 key={idx}
-                addToCartClick={() => updateCart(addItemToCart(item))}
+                addToCartClick={() => updateCart({ ...addItemToCart, item })}
               />
             ))
         }

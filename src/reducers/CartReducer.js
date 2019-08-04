@@ -3,6 +3,7 @@ export const initialState = {
 };
 
 export default function cart(state = initialState.cart, action) {
+  console.log(action);
   switch (action.type) {
     case 'ADD_TO_CART':
       if (state.length === 0) { // if no items in cart yet

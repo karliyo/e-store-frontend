@@ -7,7 +7,12 @@ module.exports = (api) => {
           'assets'
         ],
         alias: {
-          '@config': './src/config',
+          '@root': './src',
+          '@actions': './src/actions',
+          '@components': './src/components',
+          '@utils': './src/utils',
+          '@reducers': './src/reducers',
+          '@context': './src/context'
         },
       }
     ],

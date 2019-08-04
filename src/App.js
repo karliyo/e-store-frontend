@@ -1,13 +1,12 @@
 import React, { useReducer, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Header from './components/header/Header';
-import Posts from './components/splash';
-import Cart from './components/cart/container';
-import StoreContext from './context/store.context';
-import CartReducer, { initialState as initialCart } from './reducers/CartReducer';
-import ProductsReducer, { initialState as initialProducts } from './reducers/ProductsReducer';
-import { saveState } from './utils/localstorage';
-import './App.css';
+import Header from '@components/header/Header';
+import Posts from '@components/splash';
+import Cart from '@components/cart/container';
+import StoreContext from '@context/store.context';
+import CartReducer, { initialState as initialCart } from '@reducers/CartReducer';
+import ProductsReducer, { initialState as initialProducts } from '@reducers/ProductsReducer';
+import { saveState } from '@utils/localstorage';
 
 export default function App() {
   const [cart, updateCart] = useReducer(CartReducer, initialCart.cart);
