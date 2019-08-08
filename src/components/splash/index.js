@@ -1,35 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { cartAction } from '@actions/UserActions';
+import { InfiniteScroll } from 'react-simple-infinite-scroll';
+import availabilityOptions from '@constants/availabilityOptions';
+import { cartActionTypes as cartAction } from '@actionTypes';
 import {
   fetchProducts, fetchDepartments, fetchStores,
 } from '@data/FetchActions';
 import StoreContext from '@context/store.context';
 import Item from './item/Item';
-import FilterContainer from './filters';
-import './Splash.css';
+import FilterContainer from './filters/container';
+import './Splash.scss';
 import './filters/Filters.css';
 
-const dropDownMenuStyle = {
-  margin: '0em 0em 0.25em 0.25em',
-  padding: '0',
-};
-
-const menuItemStyle = {
-  color: 'black',
-};
-
-const availabilityOptions = [
-  {
-    name: 'In stock',
-  },
-  {
-    name: 'Out of stock',
-  },
-];
-
 export default function Posts() {
-  const [page, setPage] = useState(0);
-  const [size, setSize] = useState(32);
+  const [size] = useState(30);
+  const [hasMore, setHasMore] = useState(true);
+
+  const [visibleProducts, setVisibleProducts] = useState([]);
 
   const {
     products: {
@@ -49,11 +35,15 @@ export default function Posts() {
     },
   } = useContext(StoreContext);
 
+  const [page] = useState(0);
+  const [productsPage, setProductsPage] = useState(productState.pagination.currentPage);
+
   useEffect(() => {
     fetchProducts({
-      size, page,
+      size,
+      page: productsPage,
     })(productAction);
-  }, []);
+  }, [size, productsPage]);
 
   useEffect(() => {
     fetchDepartments({
@@ -76,25 +66,18 @@ export default function Posts() {
 
   const [state, setState] = useState(initialState);
 
-  const showMoreItems = () => {
-    setState(prevState => ({
-      ...prevState,
-      shownItems: prevState.shownItems >= prevState.items.length
-        ? prevState.shownItems
-        : prevState.shownItems + 5, // shows 5 more items when this is called
-    }));
-  };
-
-  const handleScroll = (e) => {
-    return;
-    if (bottom !== null) {
-      const n = bottom.getBoundingClientRect().top;
-      const m = window.innerHeight;
-      if (n <= m) { // when scrolled to bottom, it tries to show more items
-        showMoreItems();
-      }
-    }
-  };
+  useEffect(() => {
+    setVisibleProducts([...visibleProducts, ...productState.items
+      .slice(size * productsPage, size * productsPage + size) // shows only a certain amount of items at once
+      .map(item => (
+        <Item
+          key={`${item.id}-${item.name}`}
+          {...item}
+          isFetching={productState.isFetching}
+          addToCartClick={() => updateCart({ ...cartAction.ADD, item })}
+        />
+      ))]);
+  }, [productState.items]);
 
   const handleStoreOptionChange = (event, index, value) => setState({
     ...state,
@@ -111,49 +94,45 @@ export default function Posts() {
     departmentFilter: value,
   });
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-  }, []);
+  const loadMore = () => {
+    setProductsPage(prevPage => prevPage + 1);
+    if (productsPage === productState.pagination.totalPages) {
+      setHasMore(false);
+    }
+  };
 
   return (
     <div className="posts">
-      <div className="product-filters">
-        <>
-          <FilterContainer
-            menuItemStyle={menuItemStyle}
-            style={dropDownMenuStyle}
-            onChange={handleStoreOptionChange}
-            options={storeState.stores}
-            title="Country"
-          />
-          <FilterContainer
-            menuItemStyle={menuItemStyle}
-            style={dropDownMenuStyle}
-            onChange={handleAvailabilityOptionChange}
-            options={availabilityOptions}
-            title="Stock"
-          />
-          <FilterContainer
-            menuItemStyle={menuItemStyle}
-            style={dropDownMenuStyle}
-            onChange={handleCategoryOptionChange}
-            options={departmentState.departments}
-            title={window.innerWidth > 768 ? 'Department' : 'Dpt'}
-          />
-        </>
-      </div>
-      {
-        productState.items
-          .slice(0, state.shownItems) // shows only a certain amount of items at once
-          .map(item => (
-            <Item
-              key={`${item.id}-${item.name}`}
-              {...item}
-              isFetching={productState.isFetching}
-              addToCartClick={() => updateCart({ ...cartAction.ADD, item })}
-            />
-          ))
-      }
+      <FilterContainer
+        menus={
+          [
+            {
+              options: storeState.stores,
+              title: 'Country',
+              onChange: handleStoreOptionChange,
+            },
+            {
+              options: availabilityOptions,
+              title: 'Stock',
+              onChange: handleAvailabilityOptionChange,
+            },
+            {
+              options: departmentState.departments,
+              title: window.innerWidth > 768 ? 'Department' : 'Dpt',
+              onChange: handleCategoryOptionChange,
+            },
+          ]
+        }
+      />
+      <InfiniteScroll
+        onLoadMore={loadMore}
+        hasMore={hasMore}
+        loader={<div className="loader" key={0}>Loading ...</div>}
+        throttle={1000}
+        threshold={100}
+      >
+        {visibleProducts}
+      </InfiniteScroll>
     </div>
   );
 }

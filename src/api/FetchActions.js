@@ -1,7 +1,6 @@
-import { fetchActionTypes } from '@actionTypes';
 import { API_PATH } from '@constants/paths';
-
-const getUrl = data => Object.keys(data).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`).join('&');
+import { getUrl } from '@components/goodies/helpers/UrlHelper';
+import { fetchActionTypes } from '@actionTypes';
 
 export function fetchInternal(url) {
   return fetch(`${API_PATH}${url}`, {
