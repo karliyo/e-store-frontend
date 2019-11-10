@@ -58,7 +58,7 @@ class Posts extends Component {
     mapStoreCountriesAndItemDepartments() {
         let countries = [];
         let departments = [];
-        this.state.items.map((item) => {
+        this.state.items.forEach((item) => {
             if (countries.indexOf(item.store) === -1) {
                 countries.push(item.store);
             }
@@ -94,7 +94,7 @@ class Posts extends Component {
     filterItems() {
         let result = [];
         let inStock = this.state.inStockFilter === 0;
-        this.state.items.map((item) => {
+        this.state.items.forEach((item) => {
             if (item.store === this.state.countries[this.state.storeValue] && // compares item attributes to filter opts
                 item.instock === inStock &&
                 item.department === this.state.departments[this.state.departmentFilter]) {

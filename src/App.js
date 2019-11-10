@@ -11,8 +11,8 @@ export default class App extends Component {
             <div className="main-wrapper">
                 <Header/>
                 <Switch>
-                    <Route exact path={process.env.PUBLIC_URL} component={Posts} />
-                    <Route exact path={process.env.PUBLIC_URL+"/cart"} component={Cart} />
+                    <Route exact path={'/'} component={Posts} />
+                    <Route exact path={'/cart'} component={Cart} />
                 </Switch>
             </div>
         );
