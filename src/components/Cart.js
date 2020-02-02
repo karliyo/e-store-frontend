@@ -8,9 +8,9 @@ import { MuiThemeProvider, RaisedButton } from "material-ui";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 
-require('./stylesheets/Cart.css');
+import './stylesheets/Cart.css';
 
-let checkoutButton = {
+const checkoutButton = {
     color: '#FFF',
     paddingBottom: '0',
     textAlign: 'center',
@@ -33,14 +33,14 @@ class Cart extends Component {
     }
 
     render() {
-        const cartContent = this.props.cart.map((item, idx) => {
-            return <CartItem
+        const cartContent = this.props.cart.map((item, idx) => (
+            <CartItem
                 key={idx}
                 onClickRemove={() => this.props.removeFromCart(item)}
                 onClickReduce={() => this.props.reduceQuantity(item)}
                 onClickIncrease={() => this.props.increaseQuantity(item)}
                 {...item} />
-        });
+        ));
         const emptyCart = () => { return (<div id="empty-cart">No items yet..</div>) };
         this.calculateTotalPrice(this.props.cart);
         return (
@@ -70,16 +70,12 @@ class Cart extends Component {
     };
 }
 
-function mapStateToProps(state) {
-    return { cart: state.cart };
-}
+const mapStateToProps = ({ cart }) =>  ({ cart });
 
-function mapDispatchToProps(dispatch) {
-    return {
-        removeFromCart: item => dispatch(removeItemFromCart(item)),
-        reduceQuantity: item => dispatch(reduceQuantity(item)),
-        increaseQuantity: item => dispatch(increaseQuantity(item))
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+    removeFromCart: item => dispatch(removeItemFromCart(item)),
+    reduceQuantity: item => dispatch(reduceQuantity(item)),
+    increaseQuantity: item => dispatch(increaseQuantity(item))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

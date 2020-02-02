@@ -1,5 +1,3 @@
 import initialState from './InitialState';
 
-export default function products(state = initialState.products) {
-    return state;
-};
+export default (state = initialState.products) => state;

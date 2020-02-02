@@ -3,20 +3,19 @@ import items from '../mock/mock_items.json';
 import Item from "./Item";
 import { connect } from 'react-redux';
 import { addItemToCart } from '../actions/UserActions';
-import axios from "axios";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import { DropDownMenu, MenuItem, MuiThemeProvider } from "material-ui";
 
-require('./stylesheets/Posts.css');
-require('./stylesheets/Filters.css');
+import './stylesheets/Posts.css';
+import './stylesheets/Filters.css';
 
-let dropDownMenuStyle = {
+const dropDownMenuStyle = {
     margin: '0em 0em 0.25em 0.25em',
     padding: '0'
 };
 
-let menuItemStyle = {
+const menuItemStyle = {
     color: 'black'
 };
 
@@ -56,8 +55,8 @@ class Posts extends Component {
     }
 
     mapStoreCountriesAndItemDepartments() {
-        let countries = [];
-        let departments = [];
+        const countries = [];
+        const departments = [];
         this.state.items.forEach((item) => {
             if (countries.indexOf(item.store) === -1) {
                 countries.push(item.store);
@@ -66,25 +65,21 @@ class Posts extends Component {
                 departments.push(item.department);
             }
         });
-        this.setState({countries: countries, departments: departments});
+        this.setState({ countries, departments });
     }
 
     // Sends a GET request for items data to API.
-    getStoreItems() {
-        let API_KEY = process.env.REACT_APP_HEROKU_API_KEY;
-        axios.get('http://erply-challenge.herokuapp.com/list?AUTH=' + API_KEY)
-            .then((res) => {
-                this.setState({items: res.data})
-            }).catch((err) => {
-                console.log(err);
-        });
+    async getStoreItems() {
+        const API_KEY = process.env.REACT_APP_HEROKU_API_KEY;
+        const { data: items } = await (await fetch('http://erply-challenge.herokuapp.com/list?AUTH=' + API_KEY)).json();
+        this.setState({ items });
     }
 
 
     handleScroll = () => {
         if (this.bottom !== null) {
-            let n = this.bottom.getBoundingClientRect().top;
-            let m = window.innerHeight;
+            const n = this.bottom.getBoundingClientRect().top;
+            const m = window.innerHeight;
             if (n <= m) { // when scrolled to bottom, it tries to show more items
                 this.showMoreItems();
             }
@@ -92,8 +87,8 @@ class Posts extends Component {
     };
 
     filterItems() {
-        let result = [];
-        let inStock = this.state.inStockFilter === 0;
+        const result = [];
+        const inStock = this.state.inStockFilter === 0;
         this.state.items.forEach((item) => {
             if (item.store === this.state.countries[this.state.storeValue] && // compares item attributes to filter opts
                 item.instock === inStock &&
@@ -104,11 +99,11 @@ class Posts extends Component {
         return result;
     }
 
-    handleStoreOptionChange = (event, index, value) => this.setState({storeValue: value});
+    handleStoreOptionChange = (event, index, storeValue) => this.setState({ storeValue });
 
-    handleAvailabilityOptionChange = (event, index, value) => this.setState({inStockFilter: value});
+    handleAvailabilityOptionChange = (event, index, inStockFilter) => this.setState({ inStockFilter });
 
-    handleCategoryOptionChange = (event, index, value) => this.setState({departmentFilter: value});
+    handleCategoryOptionChange = (event, index, departmentFilter) => this.setState({ departmentFilter });
 
     render() {
         const filteredItems = this.filterItems();
@@ -175,16 +170,10 @@ class Posts extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        items: state.items
-    };
-}
+const mapStateToProps = ({ items }) => ({ items });
 
-function mapDispatchToProps(dispatch) {
-    return {
-        addToCart: item => dispatch(addItemToCart(item))
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+    addToCart: item => dispatch(addItemToCart(item))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
